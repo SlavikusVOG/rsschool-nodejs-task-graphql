@@ -7,18 +7,19 @@ import {
   GraphQLString
 } from "graphql"
 import { profileType } from "./profile.type.js"
+import { memberTypeId } from "./memberTypeId.type.js";
 
 const memberType = new GraphQLObjectType({
   name: 'MemberType',
   fields: () => ({
     id: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: new GraphQLNonNull(memberTypeId),
     },
     discount: {
-      type: GraphQLFloat
+      type: new GraphQLNonNull(GraphQLFloat),
     },
     postsLimitPerMonth: {
-      type: GraphQLInt
+      type: new GraphQLNonNull(GraphQLInt),
     },
     profiles: {
       type: new GraphQLList( profileType )

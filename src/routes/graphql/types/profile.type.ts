@@ -5,24 +5,26 @@ import {
   GraphQLObjectType,
   GraphQLString
 } from "graphql"
+import { UUIDType } from "./uuid.js";
+import { memberTypeId } from "./memberTypeId.type.js";
 
 const profileType = new GraphQLObjectType({
   name: 'Profile',
   fields: () => ({
     id: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: new GraphQLNonNull(UUIDType),
     },
     isMale: {
-      type: GraphQLBoolean,
+      type: new GraphQLNonNull(GraphQLBoolean),
     },
     yearOfBirth: {
-      type: GraphQLInt,
+      type: new GraphQLNonNull(GraphQLInt),
     },
     userId: {
-      type: GraphQLString,
+      type: UUIDType,
     },
     memberTypeId: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(memberTypeId),
     }
   })
 });

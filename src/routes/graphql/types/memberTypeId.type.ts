@@ -15,8 +15,4 @@ const config: GraphQLEnumTypeConfig = {
     }
   }
 };
-const memberTypeId = new GraphQLEnumType(config);
-
-export default {
-  memberTypeId
-};
+export const memberTypeId = new GraphQLEnumType(config);
