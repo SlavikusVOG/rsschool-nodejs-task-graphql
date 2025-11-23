@@ -11,7 +11,7 @@ export const rootQueryType = new GraphQLObjectType({
   name: "RootQueryType",
   fields: () => ({
     memberTypes: {
-      type: new GraphQLNonNull(new GraphQLList(memberType)),
+      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(memberType))),
       resolve: async (_source, _args, context: Context) => {
         const result = await context?.prisma?.memberType?.findMany();
         return result;
@@ -30,7 +30,7 @@ export const rootQueryType = new GraphQLObjectType({
       },
     },
     users: {
-      type: new GraphQLNonNull(new GraphQLList(userType)),
+      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(userType))),
       resolve: async (_source, _args, context: Context) => {
         const result = await context?.prisma?.user?.findMany();
         return result;
