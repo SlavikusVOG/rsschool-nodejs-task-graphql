@@ -1,6 +1,6 @@
 import { GraphQLObjectType } from "graphql";
 import { rootQueryType } from "./rootQuery.type.js";
-import { mutationsType } from "./mutation.type.js";
+import { MutationsType } from "./mutation.type.js";
 
 export const QueryType = new GraphQLObjectType({
   name: 'Query',
@@ -9,7 +9,7 @@ export const QueryType = new GraphQLObjectType({
       type: rootQueryType,
     },
     mutation: {
-      type: mutationsType,
+      type: MutationsType,
     }
   })
 });

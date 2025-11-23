@@ -5,7 +5,7 @@ import { PostType, createPostInput, changePostInput } from "../types/post.type.j
 import { UUIDType } from "../types/uuid.js";
 import { Context } from "../types/context.type.js";
 
-export const mutationsType = new GraphQLObjectType({
+export const MutationsType = new GraphQLObjectType({
   name: 'Mutations',
   fields: {
     createUser: {

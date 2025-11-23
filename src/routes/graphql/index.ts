@@ -11,7 +11,7 @@ import { QueryType } from './queries/query.js';
 import depthLimit from 'graphql-depth-limit';
 import { Context } from './types/context.type.js';
 import { rootQueryType } from './queries/rootQuery.type.js';
-import { mutationsType } from './queries/mutation.type.js';
+import { MutationsType } from './queries/mutation.type.js';
 
 function validationErrors(query: string) {
   const schema = new GraphQLSchema({
@@ -51,7 +51,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         }
         const schema = new GraphQLSchema({
           query: rootQueryType,
-          mutation: mutationsType,
+          mutation: MutationsType,
         });
         const result = await graphql({
           schema,
