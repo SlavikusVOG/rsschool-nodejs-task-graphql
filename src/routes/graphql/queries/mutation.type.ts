@@ -1,7 +1,7 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
-import { userType, createUserInput, changeUserInput } from "../types/user.type.js";
-import { profileType, createProfileInput, changeProfileInput } from "../types/profile.type.js";
-import { postType, createPostInput, changePostInput } from "../types/post.type.js";
+import { UserType, createUserInput, changeUserInput } from "../types/user.type.js";
+import { ProfileType, createProfileInput, changeProfileInput } from "../types/profile.type.js";
+import { PostType, createPostInput, changePostInput } from "../types/post.type.js";
 import { UUIDType } from "../types/uuid.js";
 import { Context } from "../types/context.type.js";
 
@@ -9,7 +9,7 @@ export const mutationsType = new GraphQLObjectType({
   name: 'Mutations',
   fields: {
     createUser: {
-      type: new GraphQLNonNull(userType),
+      type: new GraphQLNonNull(UserType),
       args: {
         dto: { type: new GraphQLNonNull(createUserInput)},
       },
@@ -22,7 +22,7 @@ export const mutationsType = new GraphQLObjectType({
       },
     },
     createProfile: {
-      type: new GraphQLNonNull(profileType),
+      type: new GraphQLNonNull(ProfileType),
       args: {
         dto: { type: new GraphQLNonNull(createProfileInput)},
       },
@@ -35,7 +35,7 @@ export const mutationsType = new GraphQLObjectType({
       },
     },
     createPost: {
-      type: new GraphQLNonNull(postType),
+      type: new GraphQLNonNull(PostType),
       args: {
         dto: { type: new GraphQLNonNull(createPostInput)},
       },
@@ -48,12 +48,12 @@ export const mutationsType = new GraphQLObjectType({
       },
     },
     changePost: {
-      type: new GraphQLNonNull(postType),
+      type: new GraphQLNonNull(PostType),
       args: {
         id: { type: new GraphQLNonNull(UUIDType)},
         dto: { type: new GraphQLNonNull(changePostInput)},
       },
-      resolve: async (_source, args: {id: string, dto: object}, context) => {
+      resolve: async (_source, args: {id: string, dto: object}, context: Context) => {
         const result = await context.prisma.post.update({
           where: {
             id: args.id,
@@ -64,11 +64,11 @@ export const mutationsType = new GraphQLObjectType({
       }
     },
     changeProfile: {
-      type: new GraphQLNonNull(profileType),
+      type: new GraphQLNonNull(ProfileType),
       args: {
         dto: { type: new GraphQLNonNull(changeProfileInput)},
       },
-      resolve: async (_source, args: {id: string, dto: object}, context) => {
+      resolve: async (_source, args: {id: string, dto: object}, context: Context) => {
         const result = await context.prisma.profile.update({
           where: {
             id: args.id,
@@ -79,11 +79,11 @@ export const mutationsType = new GraphQLObjectType({
       }
     },
     changeUser: {
-      type: new GraphQLNonNull(userType),
+      type: new GraphQLNonNull(UserType),
       args: {
         dto: { type: new GraphQLNonNull(changeUserInput)},
       },
-      resolve: async (_source, args: {id: string, dto: object}, context) => {
+      resolve: async (_source, args: {id: string, dto: object}, context: Context) => {
         const result = await context.prisma.user.update({
           where: {
             id: args.id,
@@ -141,7 +141,7 @@ export const mutationsType = new GraphQLObjectType({
         userId: { type: new GraphQLNonNull(UUIDType) },
         authorId: { type: new GraphQLNonNull(UUIDType) },
       },
-      resolve: async (_source, args: {id: string, authorId: string}, context) => {
+      resolve: async (_source, args: {id: string, authorId: string}, context: Context) => {
         await context.prisma.user.update({
           where: {
             id: args.id,
@@ -163,7 +163,7 @@ export const mutationsType = new GraphQLObjectType({
         userId: { type: new GraphQLNonNull(UUIDType) },
         authorId: { type: new GraphQLNonNull(UUIDType) },
       },
-      resolve: async (_source, args: {userId: string, authorId: string}, context) => {
+      resolve: async (_source, args: {userId: string, authorId: string}, context: Context) => {
         const result = await context.prisma.subscribersOnAuthors.delete({
           where: {
             subscriberId_authorId: {

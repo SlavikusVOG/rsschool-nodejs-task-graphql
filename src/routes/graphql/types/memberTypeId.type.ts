@@ -2,17 +2,17 @@ import {
   GraphQLEnumType,
   GraphQLEnumTypeConfig
 } from "graphql";
-import { MemberTypeId } from "../../member-types/schemas.js";
+import { MemberTypeId as MemberTypeIdEnum } from "../../member-types/schemas.js";
 
 const config: GraphQLEnumTypeConfig = {
   name: 'MemberTypeId',
   values: {
     BASIC: {
-      value: MemberTypeId.BASIC
+      value: MemberTypeIdEnum.BASIC
     },
     BUSINESS: {
-      value: MemberTypeId.BUSINESS
+      value: MemberTypeIdEnum.BUSINESS
     }
   }
 };
-export const memberTypeId = new GraphQLEnumType(config);
+export const MemberTypeId = new GraphQLEnumType(config);

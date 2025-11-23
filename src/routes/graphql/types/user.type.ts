@@ -1,9 +1,9 @@
 import { GraphQLFloat, GraphQLInputObjectType, GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql"
-import { profileType } from "./profile.type.js"
-import { postType } from "./post.type.js"
+import { ProfileType as ProfileType } from "./profile.type.js"
+import { PostType } from "./post.type.js"
 import { UUIDType } from "./uuid.js";
 
-export const userType = new GraphQLObjectType({
+export const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
     id: {
@@ -16,17 +16,17 @@ export const userType = new GraphQLObjectType({
       type: new GraphQLNonNull(GraphQLFloat),
     },
     profile: {
-      type: profileType,
+      type: ProfileType,
     },
     posts: {
-      type: new GraphQLNonNull(new GraphQLList(postType)),
+      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(PostType))),
     },
     userSubscribedTo: {
-      type: new GraphQLNonNull(new GraphQLList(userType)),
+      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(UserType))),
     },
     subscribedToUser: {
-      type: new GraphQLNonNull(new GraphQLList(userType)),
-    }
+      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(UserType))),
+    },
   }),
 });
 
