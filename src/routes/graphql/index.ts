@@ -7,7 +7,7 @@ import {
   parse,
   validate
 } from 'graphql';
-import { queryType } from './queries/query.js';
+import { QueryType } from './queries/query.js';
 import depthLimit from 'graphql-depth-limit';
 import { Context } from './types/context.type.js';
 import { rootQueryType } from './queries/rootQuery.type.js';
@@ -15,14 +15,15 @@ import { mutationsType } from './queries/mutation.type.js';
 
 function validationErrors(query: string) {
   const schema = new GraphQLSchema({
-    query: queryType
+    query: QueryType
   })
   const source = new Source(query);
   const ast = parse(source);
   const rules = [
     depthLimit(5),
   ];
-  return validate(schema, ast, rules);
+  const result = validate(schema, ast, rules);
+  return result;
 }
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
@@ -43,10 +44,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         const {query, variables} = req.body;
         const errors = validationErrors(query);
         if (errors.length > 0) {
-          const messages = errors.reduce((previous: string, current: Error) => {
-            return previous.concat(`\n${current.message}`);
-          }, '');
-          throw new Error(messages);
+          return {errors};
         }
         const context: Context = {
           prisma,
