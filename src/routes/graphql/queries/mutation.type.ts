@@ -99,7 +99,7 @@ export const MutationsType = new GraphQLObjectType({
         id: {type: new GraphQLNonNull(UUIDType)}
       },
       resolve: async (_source, args: {id: string}, context: Context) => {
-        await context.prisma.user.delete({
+        await context.prisma.user.deleteMany({
           where: {
             id: args.id,
           }
@@ -113,7 +113,7 @@ export const MutationsType = new GraphQLObjectType({
         id: {type: new GraphQLNonNull(UUIDType)}
       },
       resolve: async (_source, args: {id: string}, context: Context) => {
-        await context.prisma.profile.delete({
+        await context.prisma.profile.deleteMany({
           where: {
             id: args.id,
           }
@@ -127,7 +127,7 @@ export const MutationsType = new GraphQLObjectType({
         id: {type: new GraphQLNonNull(UUIDType)}
       },
       resolve: async (_source, args: {id: string}, context: Context) => {
-        await context.prisma.profile.delete({
+        await context.prisma.profile.deleteMany({
           where: {
             id: args.id,
           }
