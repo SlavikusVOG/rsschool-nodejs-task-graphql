@@ -1,5 +1,6 @@
 import {
   GraphQLBoolean,
+  GraphQLInputObjectType,
   GraphQLInt,
   GraphQLNonNull,
   GraphQLObjectType,
@@ -28,7 +29,7 @@ export const profileType = new GraphQLObjectType({
   })
 });
 
-export const changeProfileInput = new GraphQLObjectType({
+export const changeProfileInput = new GraphQLInputObjectType({
   name: 'ChangeProfileInput',
   fields: () => ({
     isMale: {type: GraphQLBoolean},
@@ -37,7 +38,7 @@ export const changeProfileInput = new GraphQLObjectType({
   })
 });
 
-export const createProfileInput = new GraphQLObjectType({
+export const createProfileInput = new GraphQLInputObjectType({
   name: 'CreateProfileInput',
   fields: () => ({
     isMale: {type: new GraphQLNonNull(GraphQLBoolean)},
@@ -45,4 +46,4 @@ export const createProfileInput = new GraphQLObjectType({
     userId: {type: new GraphQLNonNull(UUIDType)},
     memberTypeId: {type: new GraphQLNonNull(memberTypeId)},
   })
-})
+});

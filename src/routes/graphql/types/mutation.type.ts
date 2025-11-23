@@ -1,7 +1,9 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
-import { userType } from "./user.type.js";
-import { profileType } from "./profile.type.js";
-import { postType } from "./post.type.js";
+import { userType, createUserInput, changeUserInput } from "./user.type.js";
+import { profileType, createProfileInput, changeProfileInput } from "./profile.type.js";
+import { postType, createPostInput, changePostInput } from "./post.type.js";
+import { UUIDType } from "./uuid.js";
+import { Context } from "./context.type.js";
 
 export const mutationsType = new GraphQLObjectType({
   name: 'Mutations',
