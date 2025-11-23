@@ -3,12 +3,11 @@ import {
   GraphQLInt,
   GraphQLNonNull,
   GraphQLObjectType,
-  GraphQLString
 } from "graphql"
 import { UUIDType } from "./uuid.js";
 import { memberTypeId } from "./memberTypeId.type.js";
 
-const profileType = new GraphQLObjectType({
+export const profileType = new GraphQLObjectType({
   name: 'Profile',
   fields: () => ({
     id: {
@@ -28,7 +27,3 @@ const profileType = new GraphQLObjectType({
     }
   })
 });
-
-export {
-  profileType
-};

@@ -4,7 +4,6 @@ import {
   GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
-  GraphQLString
 } from "graphql"
 import { profileType } from "./profile.type.js"
 import { memberTypeId } from "./memberTypeId.type.js";
