@@ -18,3 +18,20 @@ export const postType = new GraphQLObjectType({
     }
   })
 });
+
+export const changePostInput = new GraphQLObjectType({
+  name: 'ChangePostInput',
+  fields: () => ({
+    title: {type: GraphQLString},
+    content: {type: GraphQLString},
+  }),
+});
+
+export const createPostInput = new GraphQLObjectType({
+  name: 'CreatePostInput',
+  fields: () => ({
+    title: {type: new GraphQLNonNull(GraphQLString)},
+    content: {type: new GraphQLNonNull(GraphQLString)},
+    authorId: {type: new GraphQLNonNull(UUIDType)},
+  })
+})

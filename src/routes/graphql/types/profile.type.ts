@@ -27,3 +27,22 @@ export const profileType = new GraphQLObjectType({
     }
   })
 });
+
+export const changeProfileInput = new GraphQLObjectType({
+  name: 'ChangeProfileInput',
+  fields: () => ({
+    isMale: {type: GraphQLBoolean},
+    yearOfBirth: {type: GraphQLInt},
+    memberTypeId: {type: memberTypeId}
+  })
+});
+
+export const createProfileInput = new GraphQLObjectType({
+  name: 'CreateProfileInput',
+  fields: () => ({
+    isMale: {type: new GraphQLNonNull(GraphQLBoolean)},
+    yearOfBirth: {type: new GraphQLNonNull(GraphQLInt)},
+    userId: {type: new GraphQLNonNull(UUIDType)},
+    memberTypeId: {type: new GraphQLNonNull(memberTypeId)},
+  })
+})
