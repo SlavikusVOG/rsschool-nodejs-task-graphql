@@ -54,13 +54,14 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         const schema = new GraphQLSchema({
           query: rootQueryType,
           mutation: mutationsType,
-        })
-        return graphql({
+        });
+        const result = await graphql({
           schema,
           source: query,
           variableValues: variables,
           contextValue: context,
         });
+        return result;
       }
       catch(error) {
         if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string') {
