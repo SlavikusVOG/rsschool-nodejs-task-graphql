@@ -20,63 +20,69 @@ export const rootQueryType = new GraphQLObjectType({
       type: memberType,
       args: { id: { type: memberTypeId} },
       resolve: async (_source, args: { id: string }, context: Context) => {
-        return await context?.prisma?.memberType?.findUnique({
+        const result = await context?.prisma?.memberType?.findUnique({
           where: {
             id: args.id,
           }
         });
+        return result;
       },
     },
     users: {
       type: new GraphQLNonNull(new GraphQLList(userType)),
       resolve: async (_source, _args, context: Context) => {
-        return context?.prisma?.memberType?.findMany();
+        const result = await context?.prisma?.user?.findMany();
+        return result;
       },
     },
     user: {
       type: new GraphQLNonNull(userType),
       args: { id: { type: UUIDType } },
       resolve: async (_source, args: {id: string}, context: Context) => {
-        return context?.prisma?.memberType?.findUnique({
+        const result = context?.prisma?.user?.findUnique({
           where: {
             id: args.id,
           }
         });
+        return result;
       },
     },
     posts: {
       type: new GraphQLNonNull(new GraphQLList(postType)),
       resolve: async (_source, _args, context: Context) => {
-        const prisma = context.prisma;
-        return prisma.memberType.findMany();
+        const result = await context.prisma.post.findMany();
+        return result;
       },
     },
     post: {
       type: new GraphQLNonNull(postType),
       args: { id: { type: UUIDType } },
       resolve: async (_source, args: {id: string}, context: Context) => {
-        return context?.prisma?.memberType?.findUnique({
+        const result = context?.prisma?.post?.findUnique({
           where: {
             id: args.id
           }
         });
+        return result;
       },
     },
     profiles: {
       type: new GraphQLNonNull(new GraphQLList(profileType)),
       resolve: async (_source, _args, context: Context) => {
-        return await context?.prisma?.memberType?.findMany();
+        const result = await context?.prisma?.profile?.findMany();
+        return result;
       },
     },
     profile: {
       type: new GraphQLNonNull(profileType),
       args: { id: { type: UUIDType } },
       resolve: async (_source, args: {id: string}, context: Context) => {
-        return await context?.prisma?.memberType?.findUnique({
+        const result = await context?.prisma?.profile?.findUnique({
           where: {
             id: args.id,
           }
         });
+        return result;
       },
     },
   })
