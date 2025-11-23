@@ -11,7 +11,7 @@ import { queryType } from './queries/query.js';
 import depthLimit from 'graphql-depth-limit';
 import { Context } from './types/context.type.js';
 import { rootQueryType } from './queries/rootQuery.type.js';
-import { mutationsType } from './types/mutation.type.js';
+import { mutationsType } from './queries/mutation.type.js';
 
 function validationErrors(query: string) {
   const schema = new GraphQLSchema({
