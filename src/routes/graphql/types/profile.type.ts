@@ -8,6 +8,7 @@ import {
 import { UUIDType } from "./uuid.js";
 import { MemberTypeId } from "./memberTypeId.type.js";
 import { MemberType } from "./memberType.type.js";
+import { Context } from "./context.type.js";
 
 export const ProfileType = new GraphQLObjectType({
   name: 'Profile',
@@ -23,7 +24,11 @@ export const ProfileType = new GraphQLObjectType({
     },
     memberType: {
       type: new GraphQLNonNull(MemberType),
-    }
+      resolve: async (source, args, context: Context) => {
+        const type = await context.loaders.memberTypeLoader.load(source.memberTypeId);
+        return type;
+      }
+    },
   })
 });
 

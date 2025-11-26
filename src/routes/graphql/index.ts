@@ -12,6 +12,7 @@ import depthLimit from 'graphql-depth-limit';
 import { Context } from './types/context.type.js';
 import { rootQueryType } from './queries/rootQuery.type.js';
 import { MutationsType } from './queries/mutation.type.js';
+import { createLoaders } from './loaders.js';
 
 function validationErrors(query: string) {
   const schema = new GraphQLSchema({
@@ -46,8 +47,10 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         if (errors.length > 0) {
           return {errors};
         }
+        const loaders = createLoaders(prisma);
         const context: Context = {
           prisma,
+          loaders,
         }
         const schema = new GraphQLSchema({
           query: rootQueryType,

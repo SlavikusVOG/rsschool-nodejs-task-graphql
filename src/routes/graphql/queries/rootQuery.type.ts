@@ -1,4 +1,6 @@
 import { GraphQLList, GraphQLNonNull, GraphQLObjectType } from "graphql";
+import { parseResolveInfo, ResolveTree } from "graphql-parse-resolve-info";
+
 import { MemberType } from "../types/memberType.type.js";
 import { UserType } from "../types/user.type.js";
 import { PostType } from "../types/post.type.js";
@@ -31,8 +33,25 @@ export const rootQueryType = new GraphQLObjectType({
     },
     users: {
       type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(UserType))),
-      resolve: async (_source, _args, context: Context) => {
-        const result = await context?.prisma?.user?.findMany();
+      resolve: async (source, _args, context: Context, info) => {
+        const resolveInfo = parseResolveInfo(info) as ResolveTree;
+        const fields = resolveInfo.fieldsByTypeName.User;
+        const include = {
+          userSubscribedTo: false,
+          subscribedToUser: false,
+        };
+        if (fields['userSubscribedTo']) {
+          include.userSubscribedTo = true;
+        }
+        if (fields['subscribedToUser']) {
+          include.subscribedToUser = true;
+        }
+        const result = await context.prisma.user.findMany({
+          include: Object.keys(include).length > 0 ? include : null,
+        });
+        result.forEach((u) => {
+          context.loaders.usersLoader.prime(u.id, u);
+        });
         return result;
       },
     },
@@ -40,18 +59,27 @@ export const rootQueryType = new GraphQLObjectType({
       // TODO: fix UserType
       type: UserType,
       args: { id: { type: UUIDType } },
-      resolve: async (_source, args: {id: string}, context: Context) => {
+      resolve: async (_source, args: {id: string}, context: Context, info) => {
+        const resolveInfo = parseResolveInfo(info) as ResolveTree;
+        const fields = resolveInfo?.fieldsByTypeName.User
+        const include = {
+          userSubscribedTo: false,
+          subscribedToUser: false,
+        };
+        if (fields['userSubscribedTo']) {
+          include.userSubscribedTo = true;
+        }
+        if (fields['subscribedToUser']) {
+          include.subscribedToUser = true;
+        }
         const result = await context?.prisma?.user?.findUnique({
           where: {
             id: args.id,
           },
-          // TODO: figure out why it works only with include
-          // include: {
-          //   profile: true,
-          //   posts: true,
-          //   subscribedToUser: true,
-          //   userSubscribedTo: true,
-          // }
+          include: {
+            subscribedToUser: include.subscribedToUser,
+            userSubscribedTo: include.userSubscribedTo,
+          }
         });
         return result;
       },
