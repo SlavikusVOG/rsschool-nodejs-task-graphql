@@ -50,3 +50,12 @@ export const createProfileInput = new GraphQLInputObjectType({
     memberTypeId: {type: new GraphQLNonNull(MemberTypeId)},
   })
 });
+
+export interface ProfileChangeArgs {
+  id: string,
+  dto: {
+    isMale?: boolean,
+    yearOfBirth?: number,
+    memberTypeId?: string,
+  }
+}

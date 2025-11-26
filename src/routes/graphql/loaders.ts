@@ -12,7 +12,6 @@ export function createLoaders(prisma: PrismaClient) {
           }
         }
       });
-      // const userMap = new Map(users.map((u) => [u.id, u]));
       return users || null;
     }),
     postsLoader: new DataLoader(async (userIds: readonly string[]) => {
@@ -94,7 +93,3 @@ export function createLoaders(prisma: PrismaClient) {
   };
   return loaders;
 }
-function batchLoadFn(keys: readonly string[]): PromiseLike<ArrayLike<{ id: string; name: string; balance: number; } | Error>> {
-  throw new Error("Function not implemented.");
-}
-
